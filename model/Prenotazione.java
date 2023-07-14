@@ -1,36 +1,90 @@
+package modello;
+
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 // Classe Prenotazione
 public class Prenotazione {
-    private boolean pagato;
-    private int costo;
-    private Date dataInizio;
-    private Date dataFine;
-    private List<Oggetto> oggetti;
+	private int costo;
+	private int quantoPagato;
+	private Periodo periodo;
+	private List<Oggetto> oggetti;
 
-    public Prenotazione() {
-        oggetti = new ArrayList<>();
-    }
+	public Prenotazione() {
+		oggetti = new ArrayList<>();
+		costo = 0;
+		quantoPagato = 0;
+	}
 
-    public boolean isSaldoEffettuato() {
-        // Implementazione della logica per verificare se il saldo è stato effettuato
-        // Ritorna true se il saldo è stato effettuato, altrimenti false
-    }
+	public boolean isSaldoEffettuato() {
+		return (quantoPagato == costo) ? true : false;
+	}
 
-    public int getCosto() {
-        // Implementazione della logica per calcolare il costo della prenotazione
-        // Ritorna il costo come un intero
-    }
+	/**
+	 * Paga il conto della prenotazione, totale o in parte
+	 * 
+	 * @param quantita soldi che vengono pagati
+	 * @return resto da dare
+	 */
+	public int pagaConto(int quantita) {
+		int result = 0;
+		if ((costo - quantoPagato) > quantita) {
+			quantoPagato += quantita;
+			result = 0;
+		} else {
+			quantoPagato += quantita;
+			result = quantoPagato - costo;
+		}
 
-    public void addOggetto(Oggetto oggetto) {
-        // Aggiunge un oggetto alla prenotazione
-        oggetti.add(oggetto);
-    }
+		return result;
+	}
 
-    public void removeOggetto(Oggetto oggetto) {
-        // Rimuove un oggetto dalla prenotazione
-        oggetti.remove(oggetto);
-    }
+	public int getCosto() {
+		if (this.costo != 0)
+			return this.costo;
+		int result = 0;
+		for (var o : this.oggetti) {
+			result += o.getPrezzo(this.periodo);
+		}
+		this.costo = result;
+		return result;
+	}
+
+	/***
+	 * aggiunge un oggetto alla posizione e aggioran il costo
+	 */
+	public void addOggetto(Oggetto oggetto) {
+		oggetti.add(oggetto);
+		this.costo += oggetto.getPrezzo(periodo);
+	}
+
+	/***
+	 * Rimuove un oggetto alla posizione e aggioran il costo
+	 */
+	public void removeOggetto(Oggetto oggetto) {
+		oggetti.remove(oggetto);
+		this.costo -= oggetto.getPrezzo(periodo);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Periodo: ").append(periodo).append("\n");
+
+		sb.append("Oggetti: \n");
+		for (Oggetto oggetto : oggetti) {
+			sb.append(oggetto).append("\n");
+		}
+
+		int mancanteDaPagare = costo - quantoPagato;
+		sb.append("Mancante da pagare: ").append(mancanteDaPagare).append("\n");
+
+		return sb.toString();
+	}
+
+	public int getPagato() {
+		return this.quantoPagato;
+	}
 }

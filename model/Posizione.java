@@ -1,4 +1,9 @@
-import java.util.*;
+package modello;
+
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 // Classe Posizione
 public class Posizione {
@@ -7,26 +12,57 @@ public class Posizione {
 
     public Posizione(int numero) {
         this.numero = numero;
-        prenotazioni = new TreeMap<>();
+        prenotazioni = new TreeMap<Periodo, Prenotazione>();
     }
 
-    public boolean isOccupato(Date data) {
-        // Implementazione della logica per verificare se la posizione è occupata nella data specificata
-        // Ritorna true se la posizione è occupata, altrimenti false
+    public int getNumero() {
+		return numero;
+	}
+
+	public boolean isOccupato(Periodo periodo) {
+    	Set<Periodo> periodi = prenotazioni.keySet();
+    	for ( var p : periodi ) {
+    		if(p.overlap(periodo) ) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
-    public Prenotazione getPrenotazioneBy(Date data) {
-        // Implementazione della logica per ottenere la prenotazione per la data specificata
-        // Ritorna l'oggetto Prenotazione o null se non è presente una prenotazione per quella data
+    public Prenotazione getPrenotazioneBy(LocalDate data) {
+    	Set<Periodo> periodi = prenotazioni.keySet();
+    	for ( var p : periodi ) {
+    		if(p.contains(data)) {
+    			return prenotazioni.get(p);
+    		}
+    	}
+    	return null;
     }
 
-    public void addPrenotazione(Periodo periodo, Prenotazione prenotazione) {
-        // Aggiunge una prenotazione alla posizione per il periodo specificato
+    public boolean addPrenotazione(Periodo periodo, Prenotazione prenotazione) {
+    	if(this.isOccupato(periodo))
+    		return false;
         prenotazioni.put(periodo, prenotazione);
+        return true;
     }
 
     public void removePrenotazione(Periodo periodo) {
-        // Rimuove la prenotazione dalla posizione per il periodo specificato
         prenotazioni.remove(periodo);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Posizione numero: ").append(numero).append("\n");
+        
+        for (Map.Entry<Periodo, Prenotazione> entry : prenotazioni.entrySet()) {
+            Periodo periodo = entry.getKey();
+            Prenotazione prenotazione = entry.getValue();
+            
+            sb.append("Periodo: ").append(periodo).append("\n");
+            sb.append("Prenotazione: ").append(prenotazione).append("\n");
+        }
+        
+        return sb.toString();
     }
 }

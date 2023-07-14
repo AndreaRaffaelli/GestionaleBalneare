@@ -1,4 +1,11 @@
+package modello;
+
 // Interfaccia Observer
 public interface Observer {
-    void update(ITariffario tariffario);
+	/***
+	 * Aggiorna il riferimento al tariffario per l'oggetto osservato
+	 */
+	void update(ITariffario tariffario);
+
+	Oggetto getOggetto();
 }

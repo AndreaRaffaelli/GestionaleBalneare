@@ -1,3 +1,5 @@
+package modello;
+
 // Classe Record
 public class Record {
     private Operatore operatore;

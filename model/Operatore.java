@@ -1,3 +1,5 @@
+package modello;
+
 // Classe Operatore
 public class Operatore {
     private String nome;
@@ -12,11 +14,32 @@ public class Operatore {
         this.bloccato = bloccato;
     }
 
+
+    public String getNome() {
+		return nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	
     public boolean isBloccato() {
         return bloccato;
     }
-
-    public void setBloccato(boolean bloccato) {
+    
+	public void setBloccato(boolean bloccato) {
         this.bloccato = bloccato;
     }
+
+
+	@Override
+	public String toString() {
+		return "Operatore [nome=" + nome + ", cognome=" + cognome + ", username=" + username + ", bloccato=" + bloccato
+				+ "]";
+	}
+	
 }
