@@ -11,9 +11,6 @@ import modello.Periodo;
 import modello.Planimetria;
 import modello.Posizione;
 import modello.Prenotazione;
-import modello.Tariffario;
-
-// Ho modificato il costruttore e aggiunto initialize
 
 public class Archivio {
 	private static List<Prenotazione> prenotazioni;
@@ -40,57 +37,42 @@ public class Archivio {
 
 	private void initialize() {
 
-		planimetria.setPosizione(4, new Posizione(4));
-		planimetria.setPosizione(6, new Posizione(6));
-		planimetria.setPosizione(8, new Posizione(8));
-
-
-		Tariffario t = new Tariffario(null, null);
 		Oggetto o = new Oggetto("Ombrellone", 100);
-		o.setTariffario(t);
-		Oggetto l = new Oggetto("Lettino", 300);
-		l.setTariffario(t);
-		Oggetto s = new Oggetto("Sdraio", 70);
-		s.setTariffario(t);
-		Oggetto r = new Oggetto("Regista", 25);
-		r.setTariffario(t);
+		Oggetto l = new Oggetto("lettino", 300);
+		Oggetto s = new Oggetto("sdraio", 70);
+		Oggetto r = new Oggetto("regista", 25);
 		oggetti = (List<Oggetto>) Arrays.asList(o, s, l, r);
 
 		Prenotazione p = new Prenotazione();
+		p.addOggetto(getOggetto("Ombrellone"));
+		p.addOggetto(getOggetto("Lettino"));
+		p.addOggetto(getOggetto("Lettino"));
 		p.setPeriodo(Periodo.nuovoPeriodo(LocalDate.of(2023, 7, 17), LocalDate.of(2023, 7, 23)));
-		p.addOggetto(getOggetto("Ombrellone"),1);
-		p.addOggetto(getOggetto("Lettino"),2);
-		// p.addOggetto(getOggetto("Lettino"));
 
 		Prenotazione p1 = new Prenotazione();
+		p1.addOggetto(getOggetto("Ombrellone"));
+		p1.addOggetto(getOggetto("Lettino"));
+		p1.addOggetto(getOggetto("Lettino"));
+		p1.addOggetto(getOggetto("Sdraio"));
 		p1.setPeriodo(Periodo.nuovoPeriodo(LocalDate.of(2023, 7, 17), LocalDate.of(2023, 7, 23)));
-		p1.addOggetto(getOggetto("Ombrellone"),1);
-		p1.addOggetto(getOggetto("Lettino"),2);
-		// p1.addOggetto(getOggetto("Lettino"));
-		p1.addOggetto(getOggetto("Sdraio"),1);
 
 		Prenotazione p2 = new Prenotazione();
+		p2.addOggetto(getOggetto("Ombrellone"));
+		p2.addOggetto(getOggetto("Lettino"));
+		p2.addOggetto(getOggetto("Regista"));
 		p2.setPeriodo(Periodo.nuovoPeriodo(LocalDate.of(2023, 7, 17), LocalDate.of(2023, 7, 23)));
-		p2.addOggetto(getOggetto("Ombrellone"),1);
-		p2.addOggetto(getOggetto("Lettino"),1);
-		p2.addOggetto(getOggetto("Regista"),1);
 
+		Planimetria planimetria = Planimetria.getInstance();
 		int id = planimetria.getId(4, 1);
 		Posizione pos = planimetria.getPosizione(id);
 		pos.addPrenotazione(p.getPeriodo(), p);
-		planimetria.setPosizione(id, pos);
-
 		id = planimetria.getId(6, 1);
 		pos = planimetria.getPosizione(id);
 		pos.addPrenotazione(p1.getPeriodo(), p1);
-		planimetria.setPosizione(id, pos);
-
 
 		id = planimetria.getId(4, 2);
 		pos = planimetria.getPosizione(id);
 		pos.addPrenotazione(p2.getPeriodo(), p2);
-		planimetria.setPosizione(id, pos);
-
 
 	}
 
@@ -113,16 +95,5 @@ public class Archivio {
 			oggetto.setQuantita(oggetto.getQuantita() + 1);
 		} else
 			System.out.println("Errore: comparso oggetto non identitficato " + oggetto);
-	}
-
-
-	//Aggiunte da fare
-
-	public static Planimetria getPlanimetria() {
-		return planimetria;
-	}
-
-	public static synchronized void addPrenotazione(Prenotazione prenotazione) {
-		prenotazioni.add(prenotazione);
 	}
 }
