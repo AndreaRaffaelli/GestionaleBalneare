@@ -1,0 +1,123 @@
+/* #30A2FF #00C4FF #FFE7A0 #FFF5B8 */
+:root {
+  --background-color: #FFE7A0 ;
+  --header-background: #30A2FF ;
+  --header-color: white;
+  --button-background: #30A2FF ;
+  --button-color: white;
+  --button-hover-background: #00C4FF ;
+  --button-click-background: #00C4FF ;
+  --activecell-background: #30A2FF ;
+  --activecell-hover-background: #30A2FF ;
+  --inactivecell-background: #30A2FF ;
+  --inactivecell-hover-background: #30A2FF ;
+  
+  --mappa-container-background: #B2EBF2;
+  --mappa-container-hover-background: #80DEEA;
+  --table-border-color: #BDBDBD;
+  --footer-background: #30A2FF ;
+  --footer-color: white;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+
+header {
+  background-color: var(--header-background);
+  padding: 20px;
+  color: var(--header-color);
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+section {
+  margin: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: var(--button-background);
+  color: var(--button-color);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: var(--button-hover-background);
+}
+
+button:active {
+  background-color: var(--button-click-background);
+}
+
+.mappa-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.mappa-container > div {
+  background-color: var(--mappa-container-background);
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.mappa-container > div:hover {
+  background-color: var(--mappa-container-hover-background);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+footer {
+  background-color: var(--footer-background);
+  padding: 10px;
+  color: var(--footer-color);
+  text-align: center;
+}
+
+.cella {
+  width: 50px;
+  height: 50px;
+  background-color: #30A2FF;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.cella:hover {
+  background-color: var(--activecell-hover-background);
+}
